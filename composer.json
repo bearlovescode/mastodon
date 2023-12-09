@@ -1,0 +1,23 @@
+{
+    "name": "bearlovescode/mastodon",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Bearlovescode\\Mastodon\\": "src/"
+        }
+    },
+    "repositories": [
+        {
+            "type": "git",
+            "url": "git@github.com:theothernic/datamodels.git"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "league/uri": "7.3.0",
+        "league/uri-components": "7.3.0",
+        "league/uri-interfaces": "7.3.0",
+        "bearlovescode/datamodels": "^1.1.0",
+        "guzzlehttp/guzzle": "^7.8.0"
+    }
+}
