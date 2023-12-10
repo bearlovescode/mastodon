@@ -8,8 +8,11 @@
     class MastodonConfiguration extends DataModel
     {
         public Uri $instance;
+        public Uri $redirect;
         public string $clientId;
         public string $clientSecret;
+
+        public string $scopes = 'read write push follow';
 
         public function __construct(array|object $data = null)
         {
