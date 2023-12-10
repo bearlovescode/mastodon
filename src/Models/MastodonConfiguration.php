@@ -17,6 +17,7 @@
         public function __construct(array|object $data = null)
         {
             $this->setInstanceUrlFromData($data);
+            $this->setRedirectUrlFromData($data);
 
             parent::__construct($data);
         }
@@ -37,11 +38,30 @@
                 unset($data->instance);
             }
         }
+        private function setRedirectUrlFromData(array|object &$data) : void
+        {
+            if (gettype($data) === 'array')
+            {
+                $this->setInstanceUrl($data['redirect']);
+                unset($data['redirect']);
+            }
+
+            elseif (gettype($data) === 'object')
+            {
+                $this->setInstanceUrl($data->redirect);
+                unset($data->redirect);
+            }
+        }
 
 
         public function setInstanceUrl(string $url) : void
         {
             $this->instance = Uri::new($url);
+        }
+
+        public function setRedirectUrl(string $url) : void
+        {
+            $this->redirect = Uri::new($url);
         }
 
     }

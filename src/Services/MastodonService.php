@@ -16,7 +16,7 @@
             $this->configureClient();
         }
 
-        public function publish (Toot $toot) : void
+        public function publish () : void
         {
 
         }
@@ -27,6 +27,5 @@
             {
                 $this->client = new ApiClient($this->config);
             }
-
         }
     }

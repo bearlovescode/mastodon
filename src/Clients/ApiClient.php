@@ -1,11 +1,16 @@
 <?php
     namespace Bearlovescode\Mastodon\Clients;
 
+    use Bearlovescode\Mastodon\Exceptions\ApiBadRequestException;
+    use Bearlovescode\Mastodon\Exceptions\ApiForbiddenException;
     use Bearlovescode\Mastodon\Exceptions\ApiNotFoundException;
+    use Bearlovescode\Mastodon\Exceptions\ApiServerErrorException;
     use Bearlovescode\Mastodon\Exceptions\ApiUnauthorizedException;
     use Bearlovescode\Mastodon\Models\MastodonConfiguration;
+    use Bearlovescode\Mastodon\Models\Token;
     use GuzzleHttp\Client;
     use GuzzleHttp\Psr7\Request;
+    use GuzzleHttp\Psr7\Response;
 
     class ApiClient
     {
@@ -17,21 +22,12 @@
             $this->client = new Client($clientOptions);
         }
 
-//        public function authorize()
-//        {
-//
-//        }
-//
-//        public function authenticate()
-//        {
-//
-//        }
 
         /**
          * @return void
          * @throws \GuzzleHttp\Exception\GuzzleException
          */
-        public function authorize()
+        public function authorize() : Token
         {
 
             $req = new Request('get', '/oauth/authorize',
@@ -50,6 +46,10 @@
                 $this->handleStatusError($res->getStatusCode());
 
 
+            $data = $this->parseBodyContent($res);
+            return $data->code;
+
+
         }
         public function token(string $authCode)
         {
@@ -65,11 +65,24 @@
             ]);
         }
 
+        public function verify()
+        {
+            $req = new Request('');
+        }
+
         public function handleStatusError(string $status = '')
         {
             match ($status) {
+                '400' => throw new ApiBadRequestException(),
                 '401' => throw new ApiUnauthorizedException(),
-                '404' => throw new ApiNotFoundException()
+                '403' => throw new ApiForbiddenException(),
+                '404' => throw new ApiNotFoundException(),
+                '500' => throw new ApiServerErrorException()
             };
+        }
+
+        public function parseBodyContent(Response $res)
+        {
+            return json_decode($res->getBody()->getContents());
         }
     }
