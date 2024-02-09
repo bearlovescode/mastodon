@@ -9,10 +9,13 @@
     {
         public Uri $instance;
         public Uri $redirect;
+        public string $name;
+        public string $website;
         public string $clientId;
         public string $clientSecret;
+        public array $uris = [];
 
-        public string $scopes = 'read write push follow';
+        public string $scopes = 'read write follow';
 
         public function __construct(array|object $data = null)
         {
@@ -20,6 +23,11 @@
             $this->setRedirectUrlFromData($data);
 
             parent::__construct($data);
+        }
+
+        public function getAppName(): string
+        {
+            return sprintf('%s (%s)', $this->name, $this->website);
         }
 
 
@@ -59,9 +67,13 @@
             $this->instance = Uri::new($url);
         }
 
+        public function getRedirectUris(): string
+        {
+            return implode(' ', $this->uris);
+        }
         public function setRedirectUrl(string $url) : void
         {
-            $this->redirect = Uri::new($url);
+            $this->uris[] = Uri::new($url);
         }
 
     }

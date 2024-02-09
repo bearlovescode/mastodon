@@ -3,29 +3,19 @@
 
     use Bearlovescode\Mastodon\Clients\ApiClient;
     use Bearlovescode\Mastodon\Models\MastodonConfiguration;
+    use Bearlovescode\Mastodon\Models\Token;
     use Bearlovescode\Mastodon\Models\Toot;
+    use DateTime;
+    use http\Env\Request;
 
-    class MastodonService
+    class MastodonService extends ApiService
     {
-        private ApiClient $client;
 
-        public function __construct(
-            private readonly MastodonConfiguration $config
-        )
-        {
-            $this->configureClient();
-        }
 
         public function publish () : void
         {
 
         }
 
-        private function configureClient() : void
-        {
-            if (empty($this->client))
-            {
-                $this->client = new ApiClient($this->config);
-            }
-        }
+
     }

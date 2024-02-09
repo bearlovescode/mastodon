@@ -11,15 +11,27 @@
     use GuzzleHttp\Client;
     use GuzzleHttp\Psr7\Request;
     use GuzzleHttp\Psr7\Response;
+    use GuzzleHttp\Psr7\Rfc7230;
 
     class ApiClient
     {
         public function __construct(
-            private readonly MastodonConfiguration $config
+            protected readonly MastodonConfiguration $config
         )
         {
             $clientOptions = [];
             $this->client = new Client($clientOptions);
+        }
+
+        public function handle(Request $req)
+        {
+            $res = $this->client->send($req);
+
+            if ($res->getStatusCode() !== 200)
+                $this->handleStatusError($res->getStatusCode());
+
+            $data = $res->getBody()->getContents();
+            return json_decode($data);
         }
 
 
@@ -53,8 +65,8 @@
         }
         public function token(string $authCode)
         {
-            $req = new Request('/oauth/token', null, [
-                'form' => [
+            $req = new Request('post', '/oauth/token', [
+                'form_params' => [
                     'client_id' => $this->config->clientId,
                     'client_secret' => $this->config->clientSecret,
                     'redirect_uri' => $this->config->redirect,
@@ -63,6 +75,14 @@
                     'scope' => $this->config->scopes
                 ]
             ]);
+
+            $res = $this->client->send($req);
+
+            if ($res->getStatusCode() !== 200)
+                $this->handleStatusError($res->getStatusCode());
+
+            $data = $res->getBody()->getContents();
+            return json_decode($data);
         }
 
         public function verify()
