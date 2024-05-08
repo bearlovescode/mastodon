@@ -50,13 +50,13 @@
         {
             if (gettype($data) === 'array')
             {
-                $this->setInstanceUrl($data['redirect']);
+                $this->setRedirectUrl($data['redirect']);
                 unset($data['redirect']);
             }
 
             elseif (gettype($data) === 'object')
             {
-                $this->setInstanceUrl($data->redirect);
+                $this->setRedirectUrl($data->redirect);
                 unset($data->redirect);
             }
         }
