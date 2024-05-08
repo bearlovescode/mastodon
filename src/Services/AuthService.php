@@ -14,7 +14,7 @@
         public function buildAuthorizeUrl(): Uri {
             $params = [
                 'client_id' => $this->config->clientId,
-                'scope' => 'read+write+push',
+                'scope' => 'read write push',
                 'redirect_uri' => (string) $this->config->redirect,
                 'response_type' => 'code'
             ];
