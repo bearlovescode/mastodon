@@ -15,7 +15,7 @@
             $params = [
                 'client_id' => $this->config->clientId,
                 'scope' => 'read+write+push',
-                'redirect_uri' => $this->config->redirect,
+                'redirect_uri' => (string) $this->config->redirect,
                 'response_type' => 'code'
             ];
 
