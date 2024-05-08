@@ -13,6 +13,7 @@
         public string $website;
         public string $clientId;
         public string $clientSecret;
+        public array $validRedirects = [];
 
         public string $scopes = 'read write follow';
 
