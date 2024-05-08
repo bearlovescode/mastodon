@@ -9,18 +9,17 @@
     class AuthService extends ApiService
     {
 
-        public function registerApp() : Token
-        {
-            $req = new Request('POST', '/api/v1/apps', [
-                'form_params' => [
-                    'client_name' => $this->config->getAppName(),
-                    'redirect_uris' => $this->config->getRedirectUris(),
-                    'scopes' => $this->config->scopes,
-                    'website' => $this->config->website
+        public function authorize() {
+            $req = new Request('GET', '/oauth/authorize', [
+                'query' => [
+                    'client_id' => $this->config->clientId,
+                    'scope' => 'read+write+push',
+                    'redirect_uri' => $this->config->redirect,
+                    'response_type' => 'code'
                 ]
             ]);
 
-            $data = $this->client->handle($req);
+            $res = $this->client->handle($req);
         }
 
         public function getAccessToken(string $code) : Token
