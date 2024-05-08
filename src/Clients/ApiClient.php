@@ -69,7 +69,7 @@
                 'form_params' => [
                     'client_id' => $this->config->clientId,
                     'client_secret' => $this->config->clientSecret,
-                    'redirect_uri' => $this->config->redirect,
+                    'redirect_uri' => (string) $this->config->redirect,
                     'grant_type' => 'authorization_code',
                     'code' => $authCode,
                     'scope' => $this->config->scopes
