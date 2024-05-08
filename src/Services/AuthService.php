@@ -19,7 +19,7 @@
                 'response_type' => 'code'
             ];
 
-            return Uri::fromBaseUri('?' . http_build_query($params), sprintf('https://%s/oauth/authorize/', $this->config->instance));
+            return Uri::fromBaseUri('?' . urldecode(http_build_query($params)), sprintf('https://%s/oauth/authorize/', $this->config->instance));
         }
 
         public function authorize() {
