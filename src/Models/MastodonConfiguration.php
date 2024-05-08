@@ -13,7 +13,6 @@
         public string $website;
         public string $clientId;
         public string $clientSecret;
-        public array $uris = [];
 
         public string $scopes = 'read write follow';
 
@@ -67,13 +66,9 @@
             $this->instance = Uri::new($url);
         }
 
-        public function getRedirectUris(): string
-        {
-            return implode(' ', $this->uris);
-        }
         public function setRedirectUrl(string $url) : void
         {
-            $this->uris[] = Uri::new($url);
+            $this->redirect = Uri::new($url);
         }
 
     }
