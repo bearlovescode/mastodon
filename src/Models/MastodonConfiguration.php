@@ -67,11 +67,18 @@
         public function setInstanceUrl(string $url) : void
         {
             $this->instance = new Uri($url);
+
+            if (empty($this->instance->getScheme()))
+                $this->instance = $this->instance->withScheme('https');
         }
 
         public function setRedirectUrl(string $url) : void
         {
             $this->redirect = new Uri($url);
+
+            if (empty($this->redirect->getScheme()))
+                $this->redirect = $this->redirect->withScheme('https');
+
         }
 
     }
