@@ -1,21 +1,23 @@
 <?php
     namespace Bearlovescode\Mastodon\Models;
 
-    use League\Uri\Uri;
+
     use Bearlovescode\Datamodels\DataModel;
+    use GuzzleHttp\Psr7\Uri;
+    use Psr\Http\Message\UriInterface;
 
 
     class MastodonConfiguration extends DataModel
     {
-        public Uri $instance;
-        public Uri $redirect;
+        public UriInterface $instance;
+        public UriInterface $redirect;
         public string $name;
         public string $website;
         public string $clientId;
         public string $clientSecret;
         public array $validRedirects = [];
 
-        public string $scopes = 'read write follow';
+        public string $scopes = 'read write follow push';
 
         public function __construct(array|object $data = null)
         {
@@ -64,12 +66,12 @@
 
         public function setInstanceUrl(string $url) : void
         {
-            $this->instance = Uri::new($url);
+            $this->instance = new Uri($url);
         }
 
         public function setRedirectUrl(string $url) : void
         {
-            $this->redirect = Uri::new($url);
+            $this->redirect = new Uri($url);
         }
 
     }
