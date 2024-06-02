@@ -74,4 +74,14 @@
             $this->redirect = new Uri($url);
         }
 
+        public function addValidRedirectUri(UriInterface $uri):void
+        {
+            $this->validRedirects[] = $uri;
+        }
+
+        public function getValidRedirectUris(): array
+        {
+            return $this->validRedirects;
+        }
+
     }
