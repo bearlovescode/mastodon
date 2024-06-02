@@ -19,9 +19,9 @@
             protected readonly MastodonConfiguration $config
         )
         {
-//            $clientOptions = [
-//                'base_uri' => $this->config->instance
-//            ];
+            $clientOptions = [
+                'base_uri' => $this->config->instance
+            ];
 
             $this->client = new Client($clientOptions);
         }
