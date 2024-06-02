@@ -26,9 +26,9 @@
             $this->client = new Client($clientOptions);
         }
 
-        public function handle(Request $req)
+        public function handle(Request $req, array $options = [])
         {
-            $res = $this->client->send($req);
+            $res = $this->client->send($req, $options);
 
             if ($res->getStatusCode() !== 200)
                 $this->handleStatusError($res->getStatusCode());
