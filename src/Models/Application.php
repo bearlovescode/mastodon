@@ -1,7 +1,9 @@
 <?php
     namespace Bearlovescode\Mastodon\Models;
 
-    class Application
+    use Bearlovescode\Datamodels\DataModel;
+
+    class Application extends DataModel
     {
         public string $id;
         public string $name;
