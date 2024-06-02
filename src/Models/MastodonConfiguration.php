@@ -10,11 +10,11 @@
     class MastodonConfiguration extends DataModel
     {
         public UriInterface $instance;
-        public UriInterface $redirect;
-        public string $name;
-        public string $website;
-        public string $clientId;
-        public string $clientSecret;
+        public ?UriInterface $redirect;
+        public ?string $name;
+        public ?string $website;
+        public ?string $clientId;
+        public ?string $clientSecret;
         public array $validRedirects = [];
 
         public string $scopes = 'read write follow push';

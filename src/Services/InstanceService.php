@@ -21,5 +21,6 @@
             $data = $this->client->handle($req);
 
             return new Application($data);
+
         }
     }
