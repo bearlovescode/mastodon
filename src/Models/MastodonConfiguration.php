@@ -73,6 +73,10 @@
         {
             $this->redirect = new Uri($url);
         }
+        public function getRedirectUrl(): string
+        {
+            return (string) $this->redirect;
+        }
 
         public function addValidRedirectUri(UriInterface $uri):void
         {

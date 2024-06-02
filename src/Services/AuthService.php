@@ -6,7 +6,7 @@
     use DateTime;
     use GuzzleHttp\Psr7\Request;
     use League\Uri\Uri;
-    use League\Uri\Modifier;
+
 
     class AuthService extends ApiService
     {

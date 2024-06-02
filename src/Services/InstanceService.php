@@ -15,7 +15,7 @@
                     'scopes' => $this->config->scopes,
                     'website' => $this->config->website
                 ]
-            ]);
+            ], null);
 
             $data = $this->client->handle($req);
 
