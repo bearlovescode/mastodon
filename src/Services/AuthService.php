@@ -2,6 +2,7 @@
     namespace Bearlovescode\Mastodon\Services;
 
 
+    use Bearlovescode\Mastodon\Models\Account;
     use Bearlovescode\Mastodon\Models\Token;
     use DateTime;
     use GuzzleHttp\Psr7\Request;
@@ -45,5 +46,16 @@
                 'scope' => $data->scope,
                 'createdAt' => (new DateTime())->setTimestamp($data->created_at)
             ]);
+        }
+
+        public function verifyCredentials(Token $token) : Account
+        {
+            $req = new Request('GET', '/accounts/verify_credentials');
+
+            $data = $this->client->handle($req, [
+                'auth' => sprintf('Bearer %s', $token->value),
+            ]);
+
+            return new Account($data);
         }
     }

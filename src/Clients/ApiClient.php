@@ -90,9 +90,9 @@
             return json_decode($data);
         }
 
-        public function verify()
+        public function verify(Token $token): object
         {
-            $req = new Request('');
+
         }
 
         public function handleStatusError(ResponseInterface $res)
