@@ -19,21 +19,21 @@
                 'response_type' => 'code'
             ];
 
-            return Uri::fromBaseUri('?' . urldecode(http_build_query($params)), sprintf('https://%s/oauth/authorize/', $this->config->instance));
+            return Uri::fromBaseUri('?' . urldecode(http_build_query($params)), sprintf('https://%s/oauth/authorize/', $this->config->instance->getHost()));
         }
 
-        public function authorize() {
-            $req = new Request('GET', '/oauth/authorize', [
-                'query' => [
-                    'client_id' => $this->config->clientId,
-                    'scope' => 'read+write+push',
-                    'redirect_uri' => $this->config->redirect,
-                    'response_type' => 'code'
-                ]
-            ]);
-
-            $res = $this->client->handle($req);
-        }
+//        public function authorize() {
+//            $req = new Request('GET', '/oauth/authorize', [
+//                'query' => [
+//                    'client_id' => $this->config->clientId,
+//                    'scope' => 'read+write+push',
+//                    'redirect_uri' => $this->config->redirect,
+//                    'response_type' => 'code'
+//                ]
+//            ]);
+//
+//            $res = $this->client->handle($req);
+//        }
 
         public function getAccessToken(string $code) : Token
         {
