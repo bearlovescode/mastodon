@@ -50,7 +50,7 @@
 
         public function verify(Token $token) : Account
         {
-            $req = new Request('GET', '/accounts/verify_credentials');
+            $req = new Request('GET', '/api/v1/accounts/verify_credentials');
 
             $data = $this->client->handle($req, [
                 'auth' => sprintf('Bearer %s', $token->value),
