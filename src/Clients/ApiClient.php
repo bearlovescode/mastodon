@@ -33,7 +33,7 @@
             $res = $this->client->send($req, $options);
 
             if ($res->getStatusCode() !== 200)
-                $this->handleStatusError($res->getStatusCode());
+                $this->handleStatusError($res);
 
             $data = $res->getBody()->getContents();
             return json_decode($data);
@@ -70,7 +70,9 @@
         }
         public function token(string $authCode)
         {
-            $req = new Request('post', '/oauth/token', [
+            $req = new Request('post', '/oauth/token');
+
+            $res = $this->client->send($req, [
                 'form_params' => [
                     'client_id' => $this->config->clientId,
                     'client_secret' => $this->config->clientSecret,
@@ -81,10 +83,8 @@
                 ]
             ]);
 
-            $res = $this->client->send($req);
-
             if ($res->getStatusCode() !== 200)
-                $this->handleStatusError($res->getStatusCode());
+                $this->handleStatusError($res);
 
             $data = $res->getBody()->getContents();
             return json_decode($data);

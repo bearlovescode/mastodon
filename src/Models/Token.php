@@ -8,6 +8,6 @@
         public string $value;
         public string $type;
         public string $scope;
-        public int $createdAt;
+        public \DateTime $createdAt;
 
     }
