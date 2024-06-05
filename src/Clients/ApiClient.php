@@ -5,6 +5,7 @@
     use Bearlovescode\Mastodon\Exceptions\ApiForbiddenException;
     use Bearlovescode\Mastodon\Exceptions\ApiNotFoundException;
     use Bearlovescode\Mastodon\Exceptions\ApiServerErrorException;
+    use Bearlovescode\Mastodon\Exceptions\ApiTooManyRequestsException;
     use Bearlovescode\Mastodon\Exceptions\ApiUnauthorizedException;
     use Bearlovescode\Mastodon\Models\MastodonConfiguration;
     use Bearlovescode\Mastodon\Models\Token;
@@ -12,6 +13,7 @@
     use GuzzleHttp\Psr7\Request;
     use GuzzleHttp\Psr7\Response;
     use GuzzleHttp\Psr7\Rfc7230;
+    use Psr\Http\Message\ResponseInterface;
 
     class ApiClient
     {
@@ -58,7 +60,7 @@
             $res = $this->client->send($req);
 
             if ($res->getStatusCode() !== 200)
-                $this->handleStatusError($res->getStatusCode());
+                $this->handleStatusError($res);
 
 
             $data = $this->parseBodyContent($res);
@@ -93,14 +95,16 @@
             $req = new Request('');
         }
 
-        public function handleStatusError(string $status = '')
+        public function handleStatusError(ResponseInterface $res)
         {
-            match ($status) {
+            match ($res->getStatusCode()) {
                 '400' => throw new ApiBadRequestException(),
                 '401' => throw new ApiUnauthorizedException(),
                 '403' => throw new ApiForbiddenException(),
                 '404' => throw new ApiNotFoundException(),
-                '500' => throw new ApiServerErrorException()
+                '429' => throw new ApiTooManyRequestsException(response: $res),
+                '500' => throw new ApiServerErrorException(),
+                default => throw new \Exception('Unexpected match value')
             };
         }
 
