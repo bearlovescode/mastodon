@@ -48,7 +48,7 @@
             ]);
         }
 
-        public function verifyCredentials(Token $token) : Account
+        public function verify(Token $token) : Account
         {
             $req = new Request('GET', '/accounts/verify_credentials');
 
